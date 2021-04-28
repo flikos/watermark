@@ -1,1 +1,1 @@
-web: gunicorn app:watermark
+web: gunicorn app:app
