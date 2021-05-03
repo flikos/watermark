@@ -1,20 +1,78 @@
-{% extends "bootstrap/base.html" %}
+{% extends "base.html" %}
 
-{% import "bootstrap/wtf.html" as wtf %}
 
 {% block html_attribs %} lang="ru"{% endblock %}
 
 {% block title %}
-    This is an example page
 {% endblock %}
 
 {% block navbar %}
-    <div class="navbar navbar-fixed-top">
-      <!-- ... -->
-    </div>
+<div class="navbar navbar-fixed-top">
+    <!-- ... -->
+</div>
 {% endblock %}
 
 {% block content %}
-    <h1>Загрузите изображение для обработки</h1>
-    {{ wtf.quick_form(form) }}
+<div class="container-sm">
+    <div class="text-center">
+        <h1>Наложение текста ("водяного знака") на файлы изображений</h1>
+        <form>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Загрузите файл изображения</label>
+                <input class="form-control" type="file" id="formFile">
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="watermark">
+                <label for="floatingInput">Водяной знак</label>
+            </div>
+            <div class="accordion accordion-flush" id="accordionFlushOptions">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Опции
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">Стартовая позиция наложения</span>
+                                        <input type="text" aria-label="start_x" class="form-control"
+                                            placeholder="50"><span class="input-group-text">x</span>
+                                        <input type="text" aria-label="start_y" class="form-control"
+                                            placeholder="50"><span class="input-group-text">y</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Заполнять всё изображение
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="flexRadioDefault2" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Вставить надпись один раз
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <label for="customRange3" class="form-label">Размер шрифта</label>
+                            <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button type="submit" class="btn btn-primary">Обработать</button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

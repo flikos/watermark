@@ -8,7 +8,7 @@
 
 import os
 
-from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask import Flask, flash, render_template, request, redirect, url_for, send_file
 from werkzeug.utils import secure_filename
 from flask_bootstrap import Bootstrap
 
@@ -25,13 +25,13 @@ SECRET_KEY = os.urandom(32)
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024    # Пока ограничение на загрузку 4Mb
+app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024    # Ограничение на загрузку 4Mb
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['DEBUG'] = True
 
 bootstrap = Bootstrap(app)
 
-def allowed_file(filename: str):
+def allowed_file(filename):
     return '.' in filename and \
             filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
@@ -61,6 +61,7 @@ def upload_file():
 
 @app.route('/index')
 def index():
+    flash('Крестик не закрывает!!!')
     form = forms.UploadForm()
     return render_template('index.html', form=form)
 
