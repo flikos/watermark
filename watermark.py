@@ -7,12 +7,12 @@ from PIL import ImageFont
 
 
 
-def watermark_text(image_path, text='watermark', color_text='gray', startpos=(50, 50), fontfile="FiraCode-Light.ttf"):
+def watermark_text(image_path, text='watermark', color_text='gray', startpos=(50, 50), fill_text=True, fontfile="FiraCode-Light.ttf"):
     ''' Накладываем водяной знак на изображение.
         Необходимые параметры запуска: watermark.py imagefile
-        Параметры запуска: watermark.py imagefile watermark_text color start_position fontfile
+        Параметры запуска: watermark.py imagefile watermark_text color start_position fill_text fontfile
         color: 'gray', 'black', 'white'
-        Пример (example):  watermark.py image.jpg 'some text' black (0,0) font.ttf
+        Пример (example):  watermark.py image.jpg 'some text' black (0,0) True font.ttf
     '''
 
     photo = Image.open(image_path)
@@ -28,10 +28,14 @@ def watermark_text(image_path, text='watermark', color_text='gray', startpos=(50
     color = color_dict.get(color_text, 'gray')
 
     font = ImageFont.truetype(fontfile, 15)
-    for x in range(startpos[0], photo.size[0], photo.size[0]//5):
-        for y in range(startpos[1], photo.size[1], photo.size[1]//5):
-            text_pos = (x, y)
-            drawing.text(text_pos, text, fill=color, font=font)
+    if fill_text:
+        for x in range(startpos[0], photo.size[0], photo.size[0]//5):
+            for y in range(startpos[1], photo.size[1], photo.size[1]//5):
+                text_pos = (x, y)
+                drawing.text(text_pos, text, fill=color, font=font)
+    else:
+        text_pos = (startpos[0], startpos[1])
+        drawing.text(text_pos, text, fill=color, font=font)
 
     # photo.show()
     photo.save('wm_' + image_path)
