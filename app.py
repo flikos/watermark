@@ -8,11 +8,10 @@
 
 import os
 
-from flask import Flask, flash, render_template, request, redirect, url_for, send_file
+from flask import Flask, flash, g, render_template, request, redirect, url_for, send_file
 from werkzeug.utils import secure_filename
-from flask_bootstrap import Bootstrap
 
-import forms
+
 import watermark
 
 
@@ -28,8 +27,6 @@ app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * \
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['DEBUG'] = True
 
-bootstrap = Bootstrap(app)
-
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -38,8 +35,7 @@ def allowed_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
-def index():
-    flash('Крестик не закрывает!!!')
+def upload_file():
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
@@ -53,10 +49,16 @@ def index():
             start_y = int(request.form['start_y']
                           ) if request.form['start_y'] else 50
             start_position = (start_x, start_y)
-            print(start_position)
             fill_text = (request.form['fill'] == 'optionAll')
+            font_ratio = int(request.form['font_ratio'])
+            watermark_text = request.form['watermark'] if request.form['watermark'] else 'Водяной знак'
             watermark_file = watermark.watermark_text(
-                filename, request.form['watermark'], startpos=start_position, fill_text=fill_text)
+                filename,
+                watermark_text,
+                startpos=start_position,
+                font_ratio=font_ratio,
+                fill_text=fill_text
+            )
             return redirect(url_for('get_image', filename=watermark_file))
             # return redirect(url_for('upload_file'))
     return render_template('index.html')

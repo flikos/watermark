@@ -1,2 +1,6 @@
 venv/
 *.swp
+*.png
+*.jpg
+*.jpeg
+
