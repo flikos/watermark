@@ -12,7 +12,7 @@ from flask import Flask, flash, g, render_template, request, redirect, url_for, 
 from werkzeug.utils import secure_filename
 
 
-import watermark
+import models, watermark
 
 
 UPLOAD_FOLDER = '.'
@@ -26,7 +26,7 @@ app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * \
     1024    # Ограничение на загрузку 4Mb
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['DEBUG'] = True
-
+image = models.WatermarkImage()
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -66,6 +66,7 @@ def upload_file():
 
 @app.route('/get_image/<filename>')
 def get_image(filename):
+    print('GetImage')
     if filename:
         return send_file(filename, as_attachment=True)
     return redirect(url_for('upload_file'))
