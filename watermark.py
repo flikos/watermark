@@ -45,6 +45,7 @@ def watermark_text(image_path, text='watermark', color_text='gray', startpos=(50
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         print(watermark_text.__doc__)
+        print('empty arguments')
         exit()
     #for infile in sys.argv[1:]:
     f, e = os.path.splitext(infile)

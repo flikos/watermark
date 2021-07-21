@@ -22,8 +22,7 @@ SECRET_KEY = os.urandom(32)
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * \
-    1024    # Ограничение на загрузку 4Mb
+app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024    # Ограничение на загрузку 4Mb
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['DEBUG'] = True
 
