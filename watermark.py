@@ -8,7 +8,8 @@ from PIL import ImageFont
 
 
 def watermark_text(image_path, text='watermark', color_text='gray', startpos=(50, 50), font_ratio=1, fill_text=True, fontfile="FiraCode-Light.ttf"):
-    ''' Накладываем водяной знак на изображение.
+    ''' 
+    Накладываем водяной знак на изображение.
         Необходимые параметры запуска: watermark.py imagefile
         Параметры запуска: watermark.py imagefile watermark_text color start_position  font_ratio fill_textfontfile
         color: 'gray', 'black', 'white'
@@ -29,11 +30,15 @@ def watermark_text(image_path, text='watermark', color_text='gray', startpos=(50
 
     font = ImageFont.truetype(fontfile, 10*font_ratio)
     if fill_text:
+        # если указано заполнение водяными знаками целиком,
+        # то с определённым шагом в цикле накладывается данный текст
+        # TODO сделать расчёт по размеру текста (чем длиннее текст, тем реже шаг)
         for x in range(startpos[0], photo.size[0], photo.size[0]//(11-font_ratio)):
             for y in range(startpos[1], photo.size[1], photo.size[1]//(11-font_ratio)):
                 text_pos = (x, y)
                 drawing.text(text_pos, text, fill=color, font=font)
     else:
+        # иначе накладываем текст только один раз в указанной позиции
         text_pos = (startpos[0], startpos[1])
         drawing.text(text_pos, text, fill=color, font=font)
 
@@ -47,12 +52,12 @@ if __name__ == '__main__':
         print(watermark_text.__doc__)
         print('empty arguments')
         exit()
-    #for infile in sys.argv[1:]:
-    f, e = os.path.splitext(infile)
-    outfile = f + ".jpg"
-    if infile != outfile:
-        try:
-            with Image.open(infile) as im:
-                im.save(outfile)
-        except OSError:
-            print("cannot convert", infile)
+    for infile in sys.argv[1:]:
+        f, e = os.path.splitext(infile)
+        outfile = f + ".jpg"
+        if infile != outfile:
+            try:
+                with Image.open(infile) as im:
+                    im.save(outfile)
+            except OSError:
+                print("cannot convert", infile)
