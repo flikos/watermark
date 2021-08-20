@@ -9,7 +9,8 @@
 import os
 
 from flask import Flask, flash, g, render_template, request, redirect, url_for, send_file
-from werkzeug.utils import secure_filename
+# from werkzeug.utils import secure_filename
+from utils import secure_filename
 
 
 import watermark
@@ -42,6 +43,7 @@ def upload_file():
             # Почему подготовка имени файла идёт после проверки на допустимые файлы?
             # Не может ли быть такого случая, когда имя файла после подготовки станет недопустимым?
             filename = secure_filename(file.filename)
+            print('file', file, 'filename', filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             start_x = int(request.form['start_x']
                           ) if request.form['start_x'] else 50
