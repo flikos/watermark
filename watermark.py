@@ -6,8 +6,15 @@ from PIL import ImageDraw
 from PIL import ImageFont
 
 
-
-def watermark_text(image_path, text='watermark', color_text='gray', startpos=(50, 50), font_ratio=1, fill_text=True, fontfile="FiraCode-Light.ttf"):
+def watermark_text(
+        image_path,
+        text='watermark',
+        color_text='gray',
+        startpos=(50, 50),
+        font_ratio=1,
+        fill_text=True,
+        fontfile="FiraCode-Light.ttf"
+):
     ''' 
     Накладываем водяной знак на изображение.
         Необходимые параметры запуска: watermark.py imagefile
@@ -22,9 +29,9 @@ def watermark_text(image_path, text='watermark', color_text='gray', startpos=(50
     drawing = ImageDraw.Draw(photo)
 
     color_dict = {
-        'black' : (0, 0, 0),
-        'gray' : (128, 128, 128),
-        'white' : (255,  255, 255)
+        'black': (0, 0, 0),
+        'gray': (128, 128, 128),
+        'white': (255,  255, 255)
     }
     color = color_dict.get(color_text, 'gray')
 
