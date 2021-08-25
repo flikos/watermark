@@ -6,6 +6,7 @@
 # Сделать RESTapi для внешних приложений на сайте
 
 
+import io
 import os
 
 from flask import Flask, flash, g, render_template, request, redirect, url_for, send_file
@@ -68,7 +69,17 @@ def upload_file():
 @app.route('/get_image/<filename>')
 def get_image(filename):
     if filename:
-        return send_file(filename, as_attachment=True)
+        # загружаем файл в оперативную память, чтобы не хранить его на диске
+        # возможно стоит целиком работать в оперативной памяти
+        return_data = io.BytesIO()
+        with open(filename, 'rb') as fo:
+            return_data.write(fo.read())
+        # (after writing, cursor will be at last byte, so move it to start)
+        return_data.seek(0)
+        # удаляем файл с диска
+        os.remove(filename)
+
+        return send_file(return_data, as_attachment=True, attachment_filename=filename)
     return redirect(url_for('upload_file'))
 
 
