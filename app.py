@@ -51,6 +51,11 @@ def upload_file():
             start_y = int(request.form['start_y']
                           ) if request.form['start_y'] else 50
             start_position = (start_x, start_y)
+            shift_step_x = int(request.form['shift_step_x']
+                          ) if request.form['shift_step_x'] else 50
+            shift_step_y = int(request.form['shift_step_y']
+                          ) if request.form['shift_step_y'] else 50
+            shift_step = (shift_step_x, shift_step_y)
             fill_text = (request.form['fill'] == 'optionAll')
             font_ratio = int(request.form['font_ratio'])
             watermark_text = request.form['watermark'] if request.form['watermark'] else 'Водяной знак'
@@ -58,8 +63,9 @@ def upload_file():
                 filename,
                 watermark_text,
                 startpos=start_position,
+                shift_step=shift_step,
                 font_ratio=font_ratio,
-                fill_text=fill_text
+                fill_text=fill_text,
             )
             return redirect(url_for('get_image', filename=watermark_file))
             # return redirect(url_for('upload_file'))

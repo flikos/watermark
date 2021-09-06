@@ -11,6 +11,7 @@ def watermark_text(
         text='watermark',
         color_text='gray',
         startpos=(50, 50),
+        shift_step=(50,50),
         font_ratio=1,
         fill_text=True,
         fontfile="FiraCode-Light.ttf"
@@ -36,14 +37,25 @@ def watermark_text(
     color = color_dict.get(color_text, 'gray')
 
     font = ImageFont.truetype(fontfile, 10*font_ratio)
+    
     if fill_text:
         # если указано заполнение водяными знаками целиком,
         # то с определённым шагом в цикле накладывается данный текст
         # TODO сделать расчёт по размеру текста (чем длиннее текст, тем реже шаг)
-        for x in range(startpos[0], photo.size[0], photo.size[0]//(11-font_ratio)):
-            for y in range(startpos[1], photo.size[1], photo.size[1]//(11-font_ratio)):
+
+        # заполнение с ориентировкой на размер шрифта
+        # for x in range(startpos[0], photo.size[0], photo.size[0]//(11-font_ratio)):
+        #     for y in range(startpos[1], photo.size[1], photo.size[1]//(11-font_ratio)):
+        #         text_pos = (x, y)
+        #         drawing.text(text_pos, text, fill=color, font=font)
+
+        # заполнение с указанем шага
+        for x in range(startpos[0], photo.size[0], shift_step[0]):
+            for y in range(startpos[1], photo.size[1], shift_step[1]):
                 text_pos = (x, y)
                 drawing.text(text_pos, text, fill=color, font=font)
+        
+
     else:
         # иначе накладываем текст только один раз в указанной позиции
         text_pos = (startpos[0], startpos[1])

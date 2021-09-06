@@ -37,6 +37,8 @@ class Watermark:
         text='watermark',
         color_text='gray',
         start_position=(50, 50),
+        # шаг смещения наложения повторения
+        shift_step=(50, 50),
         # возможно лишнее, тк есть font.size
         font_ratio=1,
         fill_text=True,
