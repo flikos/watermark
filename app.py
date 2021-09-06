@@ -52,9 +52,9 @@ def upload_file():
                           ) if request.form['start_y'] else 50
             start_position = (start_x, start_y)
             shift_step_x = int(request.form['shift_step_x']
-                          ) if request.form['shift_step_x'] else 50
+                          ) if request.form['shift_step_x'] else 500
             shift_step_y = int(request.form['shift_step_y']
-                          ) if request.form['shift_step_y'] else 50
+                          ) if request.form['shift_step_y'] else 300
             shift_step = (shift_step_x, shift_step_y)
             fill_text = (request.form['fill'] == 'optionAll')
             font_ratio = int(request.form['font_ratio'])
